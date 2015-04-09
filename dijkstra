@@ -1,0 +1,32 @@
+#include<stdio.h>
+#include<conio.h>
+
+int T[100],L[100],F1[100],F2[100], W[100][100];
+
+void dijkstra(int n){
+	int i, vnear, min, k, t=1;
+	for(i=2;i<=n;i++){
+		T[i]=1;
+		L[i]=W[1][i];
+	}
+	for(k=1;k<n;k++){
+		min=100;
+		for(i=2;i<=n;i++){
+			if(L[i]>=0 && L[i]<min){
+				min=L[i];
+				vnear=i;
+			}
+		}
+		F1[t]=vnear; F2[t]=T[vnear];
+		t++;
+		
+		for(i=2;i<=n;i++){
+			if(L[vnear]+W[vnear][i]<L[i]){
+				L[i]=L[vnear]+W[vnear][i];
+				T[i]=vnear;
+			}
+			L[vnear]=-1;
+		}
+	}
+
+}
