@@ -1,0 +1,81 @@
+#include<conio.h>
+#include<stdio.h>
+
+int p[20][20];
+int min(int a, int b){
+	if(a>b)
+		return b;
+	else
+		return a;
+}
+void path(int q, int r){
+	if(p[q][r]!=0){
+		path(q,p[q][r]);
+		printf("\nThe intermidiate vertex is:V%d\n",p[q][r]);
+		path(p[q][r],r);
+	}
+	else
+		printf("no intermidiate path");
+}
+
+
+void main(){
+	int i, j, k, n, w[20][20], d[20][20],d1[20][20],r, q;
+	printf("To insert INFINITE please insert more then 100.\n");
+	printf("Enter the dimension, N*N:");
+	scanf("%d", &n);
+	printf("\nEnter the Graph:\n");
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++){
+			scanf("%d",&w[i][j]);
+		}
+	}
+	
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++){
+			d[i][j]=w[i][j];
+			d1[i][j]=w[i][j];
+			p[i][j]=0;
+		}
+	}
+//calculate shortest path
+	for(k=1;k<=n;k++){
+		for(i=1;i<=n;i++){
+			for(j=1;j<=n;j++){
+				if(!(d[i][k]>99 || d[k][j]>99))
+					d[i][j]=min(d[i][j],d[i][k]+d[k][j]);
+			}
+		}
+	}
+	printf("The length of shortest path:\n");
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++){
+			printf("%3d",d[i][j]);
+		}
+		printf("\n");
+	}
+//calculate P array
+	for(k=1;k<=n;k++){
+		for(i=1;i<=n;i++){
+			for(j=1;j<=n;j++){
+				if(!(d1[i][k]>99 || d1[k][j]>99))
+					if(d1[i][k]+d1[k][j] < d1[i][j]){
+						p[i][j]=k;
+						d1[i][j]=d1[i][k]+d1[k][j];
+										
+				}
+			}
+		}
+	}
+	printf("\nP array:\n");
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++){
+			printf("%3d",p[i][j]);
+		}
+		printf("\n");
+	}
+	printf("Enter two vertex(q,r):");
+	scanf("%d %d",&q,&r);
+	path(q,r);
+	getch();
+}
