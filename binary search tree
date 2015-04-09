@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<conio.h>
+float a[20][20],p[20];
+int r[20][20];
+
+
+void main(){
+	clrscr();
+	float i,j,k,l,diagonal,temp1,min2=9999,sum,m,x,y;
+	int n;
+	printf("Enter the number of Array:");
+	scanf("%d",&n);
+
+	printf("Press enter the dimension:");
+	for(l=1;l<=n;l++)
+		scanf("%f",&p[l]);
+
+	for(i=1;i<=n;i++){
+		a[i][i-1]=0;
+		a[i][i]=p[i];
+		r[i][i]=i;
+		r[i][i-1]=0;
+	}
+	a[n+1][n]=0;
+	r[n+1][n]=0;
+
+	for(diagonal=1;diagonal<=n-1;diagonal++){
+		for(i=1;i<=n-diagonal;i++){
+			j=i+diagonal;
+			for(k=i;k<=j;k++){
+				sum=0;
+				for(m=i;m<=j;m++){
+					sum=p[m]+sum;
+				}
+				x=a[i][k-1]+a[k+1][j];
+				if(min2>x){
+					min2=x;
+					temp1=k;
+				}
+			}
+			y=min2+sum;
+			a[i][j]=y;
+			min2=999;
+			r[i][j]=temp1;
+		}
+	}
+	printf("\n\noutput\n");
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++){
+			printf("%f (%d)\t",a[i][j],r[i][j]);
+		}
+		printf("\n");
+	}
+	getch();
+}
+
