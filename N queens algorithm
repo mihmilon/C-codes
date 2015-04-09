@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <conio.h>
+#include <math.h>
+
+
+int x[100],n;
+int q=1;
+
+int Place(int k,int i){
+	for (int j=1;j<k;j++)
+		if ((i==x[j]) || (abs(j-k)==abs(i-x[j])))
+			return 0;
+	return 1;
+}
+
+void nQueens(int k,int n)
+{
+	for (int i=1;i<=n;i++)
+		if (Place(k,i))
+		{
+			x[k]=i;
+			if(k==n)
+			{
+				printf("%d'Solution :-  ",q);
+				q++;
+				for (i=1;i<=n;i++)
+					printf("%d  ",x[i]);
+					printf("\n");
+			}
+			else nQueens(k+1,n);
+		}
+}
+
+void main ()
+{
+	//cout<<"\n\nENTER BOARD SIZE :"<<" ";
+	scanf("%d",&n);
+	nQueens(1,n);
+	getch();
+
+}
