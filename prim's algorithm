@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<conio.h>
+
+int D[100],W[100][100],N[100],F1[100],F2[100];
+
+void prim(int n){
+	int i, vnear, min, k, t=1;
+	for(i=2;i<=n;i++){
+		N[i]=1;
+		D[i]=W[1][i];
+	}
+	for(k=1;k<n;k++){
+		min=100;
+		for(i=2;i<=n;i++){
+			if(D[i]>=0 && D[i]<min){
+				min=D[i];
+				vnear=i;
+			}
+		}
+		F1[t]=vnear; F2[t]=N[vnear];
+		t++;
+		D[vnear]=-1;
+		for(i=2;i<=n;i++){
+			if(W[i][vnear]<D[i]){
+				D[i]=W[i][vnear];
+				N[i]=vnear;
+			}
+		
+		}
+	}
+
+}
+
+
+void main(){
+	int i, j, k, n;
+	scanf("%d", &n);
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++){
+			scanf("%d",&W[i][j]);
+		}
+	}
+	prim(n);
+	printf("Shortest Path\n");
+	for(i=1;i<n;i++){
+		printf("%d %d\n", F2[i],F1[i]);
+	}
+	getch();
+}
